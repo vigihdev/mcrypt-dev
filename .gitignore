@@ -1,0 +1,19 @@
+# .gitignore
+
+# exclude File
+/bootstrap.php
+/server*.php
+/composer.lock
+/note.md
+
+# exclude File Dot
+.DS_Store
+/.amazonq
+/.vscode
+/.htaccess
+/.env*
+/.tmp
+
+# exclude directory
+/vendor
+/config

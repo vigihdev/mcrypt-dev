@@ -1,0 +1,43 @@
+{
+    "name": "vigihdev/mcrypt-dev",
+    "description": "A package for Php mcrypt dev",
+    "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vigih Dev",
+            "email": "vigihdev@gmail.com",
+            "role": "developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "McryptDev\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "process-timeout": 0
+    },
+    "scripts": {
+        "server": "php -S localhost:2232 server.php"
+    },
+    "require": {
+        "php": "^8.0",
+        "defuse/php-encryption": "^2.4",
+        "symfony/dotenv": "^6.4"
+    },
+    "require-dev": {
+        "symfony/dependency-injection": "^6.4",
+        "symfony/config": "^6.4",
+        "symfony/yaml": "^6.4",
+        "symfony/dotenv": "^6.4",
+        "symfony/console": "^6.4"
+    }
+}

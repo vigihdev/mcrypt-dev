@@ -1,2 +1,15 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# file/folder yang tidak perlu ikut saat distribusi
+/tests export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/vendor export-ignore
+/config export-ignore
+/composer.lock export-ignore
+/bootstrap.php export-ignore
+/server.php export-ignore
+/.env* export-ignore
+/phpunit.xml.dist export-ignore
+
+# pastikan docs tetap ikut
+# /config !export-ignore
