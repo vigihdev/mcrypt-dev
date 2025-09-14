@@ -6,9 +6,9 @@ namespace McryptDev;
 
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
-use Exception;
 use InvalidArgumentException;
 use Symfony\Component\Dotenv\Dotenv;
+
 
 final class Mcrypt
 {
@@ -17,11 +17,15 @@ final class Mcrypt
         private readonly Key $key
     ) {}
 
-    public function encryptEnv(string $envFile, array $keys): void
+    public function encryptEnv(string $envFile, array $keys): bool
     {
 
         if (!is_file($envFile)) {
             throw new InvalidArgumentException("Error File {$envFile} tidak tersedia", 1);
+        }
+
+        if (empty($keys)) {
+            return false;
         }
 
         $dotenvs = (new Dotenv())->parse(
@@ -39,14 +43,19 @@ final class Mcrypt
             $newEnv[$key] = $value;
         }
 
-        // Save env
-        $content = array_map(fn($value, $key) => "{$key}={$value}", $newEnv, array_keys($newEnv));
-        $content = implode(PHP_EOL, $content);
-        file_put_contents($envFile, $content);
+        if (!empty($newEnv)) {
+            // Save env
+            $content = array_map(fn($value, $key) => "{$key}={$value}", $newEnv, array_keys($newEnv));
+            $content = implode(PHP_EOL, $content);
+            return (bool)file_put_contents($envFile, $content);
+        }
+
+        return false;
     }
 
     private function isDefuseEncrypted(string $ciphertext): bool
     {
+
         // 1. Check minimal length (def50200 + minimal encrypted data)
         if (strlen($ciphertext) < 50) {
             return false;
