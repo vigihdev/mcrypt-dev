@@ -53,7 +53,7 @@ final class Mcrypt
         return false;
     }
 
-    private function isDefuseEncrypted(string $ciphertext): bool
+    public function isDefuseEncrypted(string $ciphertext): bool
     {
 
         // 1. Check minimal length (def50200 + minimal encrypted data)

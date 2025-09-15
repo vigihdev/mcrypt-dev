@@ -23,11 +23,20 @@
         }
     },
     "config": {
-        "process-timeout": 0
+        "process-timeout": 0,
+        "allow-plugins": {
+            "composer/installers": false
+        }
     },
     "scripts": {
         "server": "php -S localhost:2232 server.php"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.packagist.com/vigihdev/"
+        }
+    ],
     "require": {
         "php": "^8.0",
         "defuse/php-encryption": "^2.4",
