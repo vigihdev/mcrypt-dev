@@ -11,6 +11,11 @@ use InvalidArgumentException;
 final class Key
 {
 
+    /**
+     *
+     * @param string $keyFilepath
+     * @return \Defuse\Crypto\Key
+     */
     public static function load(string $keyFilepath): \Defuse\Crypto\Key
     {
 
