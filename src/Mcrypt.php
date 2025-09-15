@@ -75,11 +75,6 @@ final class Mcrypt
         return Crypto::encrypt($plaintext, $this->key);
     }
 
-    /**
-     *
-     * @param string $ciphertext
-     * @return string
-     */
     public function decrypt(string $ciphertext): string
     {
         return Crypto::decrypt($ciphertext, $this->key);
