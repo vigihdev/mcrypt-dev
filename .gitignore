@@ -8,6 +8,7 @@
 
 # exclude File Dot
 .DS_Store
+/.aws
 /.amazonq
 /.vscode
 /.htaccess

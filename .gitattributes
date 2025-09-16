@@ -1,4 +1,6 @@
 # file/folder yang tidak perlu ikut saat distribusi
+/.aws export-ignore
+/.amazonq export-ignore
 /tests export-ignore
 /bin export-ignore
 /.github export-ignore

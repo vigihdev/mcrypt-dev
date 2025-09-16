@@ -16,3 +16,7 @@ services:
     arguments:
       $key: "@key"
 ```
+
+```
+php bin/console mcrypt:add:env ~/.config-dev/.defuse.key --env=DB_HOST=localhost,DB_NAME=db_name
+```

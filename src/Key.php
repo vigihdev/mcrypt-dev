@@ -7,14 +7,21 @@ namespace McryptDev;
 use Exception;
 use InvalidArgumentException;
 
-
+/**
+ * Key
+ *
+ * Class untuk mengelola loading Defuse Crypto Key dari file
+ */
 final class Key
 {
-
     /**
+     * load
      *
-     * @param string $keyFilepath
-     * @return \Defuse\Crypto\Key
+     * Memuat Defuse Crypto Key dari file dengan support tilde expansion
+     *
+     * @param string $keyFilepath Path ke file key (support ~ untuk home directory)
+     * @return \Defuse\Crypto\Key Instance Defuse Crypto Key
+     * @throws InvalidArgumentException Jika file key tidak ditemukan
      */
     public static function load(string $keyFilepath): \Defuse\Crypto\Key
     {
@@ -31,13 +38,5 @@ final class Key
         }
 
         return \Defuse\Crypto\Key::loadFromAsciiSafeString(file_get_contents($keyFilepath));
-    }
-
-    public function __construct(
-        private readonly string $keyFilepath
-    ) {
-        if (!is_file($keyFilepath)) {
-            throw new InvalidArgumentException("Error File {$keyFilepath} tidak tersedia", 1);
-        }
     }
 }
