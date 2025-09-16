@@ -10,41 +10,69 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class McryptEncryptEnvCommand extends Command
+/**
+ * McryptEncryptEnvCommand
+ *
+ * Console command untuk mengenkripsi environment variables tertentu dalam file .env
+ */
+final class McryptEncryptEnvCommand extends CommandAbstract
 {
     protected static $defaultName = 'mcrypt:encrypt:env';
 
+    /**
+     * configure
+     *
+     * Konfigurasi command dengan arguments dan options
+     */
     protected function configure(): void
     {
         $this
-            ->setDescription('Encrypt environment variables')
+            ->setDescription('Encrypt specific environment variables in .env file')
             ->addArgument('keyPath', InputArgument::REQUIRED, 'Path ke file key')
             ->addArgument('envFile', InputArgument::REQUIRED, 'Path ke file .env')
-            ->addOption('keys', null, InputOption::VALUE_REQUIRED, 'Keys yang akan dienkripsi, pisahkan dengan koma');
+            ->addArgument('cwd', InputArgument::OPTIONAL, 'Curent Work Directory')
+            ->addOption('key', null, InputOption::VALUE_REQUIRED, 'Key dari envFile')
+        ;
     }
 
+    /**
+     * execute
+     *
+     * Eksekusi command untuk mengenkripsi environment variables tertentu
+     *
+     * @param InputInterface $input Input interface
+     * @param OutputInterface $output Output interface
+     * @return int Status code (SUCCESS/FAILURE)
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+
         $keyPath = $input->getArgument('keyPath');
         $envFile = $input->getArgument('envFile');
-        $keys = $input->getOption('keys');
+        $cwd = $input->getArgument('cwd');
+        $key = $input->getOption('key') ?? [];
+        $keyEnv = array_map('trim', explode(',', $key));
 
-        if (!$keys) {
-            $output->writeln('<error>Option --keys harus diisi</error>');
+        if ($cwd) {
+            $envFile = getcwd() . DIRECTORY_SEPARATOR . $envFile;
+        }
+
+        try {
+
+            $keyLoad = Key::load($keyPath);
+            $mcrypt = new Mcrypt($keyLoad);
+
+            if ($mcrypt->encryptEnv($envFile, $keyEnv)) {
+                $output->writeln('<info>Environment variables berhasil dienkripsi</info>');
+            } else {
+                $output->writeln('<error>Failed to encrypt environment variables</error>');
+                return Command::FAILURE;
+            }
+        } catch (\Exception $e) {
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
             return Command::FAILURE;
         }
 
-        $keysArray = array_map('trim', explode(',', $keys));
-
-        $key = Key::load($keyPath);
-        $mcrypt = new Mcrypt($key);
-
-        if ($mcrypt->encryptEnv($envFile, $keysArray)) {
-            $output->writeln('<info>Environment variables berhasil dienkripsi</info>');
-            return Command::SUCCESS;
-        }
-
-        $output->writeln('<error>Gagal mengenkripsi environment variables</error>');
-        return Command::FAILURE;
+        return Command::SUCCESS;
     }
 }

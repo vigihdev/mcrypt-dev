@@ -12,21 +12,40 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * McryptAddEnvCommand
+ *
+ * Console command untuk menambahkan environment variables baru ke file .env dengan enkripsi otomatis
+ */
 final class McryptAddEnvCommand extends CommandAbstract
 {
     protected static $defaultName = 'mcrypt:add:env';
 
 
+    /**
+     * configure
+     *
+     * Konfigurasi command dengan arguments dan options
+     */
     protected function configure(): void
     {
         $this
-            ->setDescription('Add and encrypt environment variables')
+            ->setDescription('Add new environment variables to .env file with automatic encryption')
             ->addArgument('keyPath', InputArgument::REQUIRED, 'Path ke file key')
             ->addArgument('envFile', InputArgument::REQUIRED, 'Path ke file env')
             ->addOption('env', null, InputOption::VALUE_REQUIRED, 'List env yang akan dienkripsi, pisahkan dengan koma')
         ;
     }
 
+    /**
+     * execute
+     *
+     * Eksekusi command untuk menambahkan environment variables dengan enkripsi otomatis
+     *
+     * @param InputInterface $input Input interface
+     * @param OutputInterface $output Output interface
+     * @return int Status code (SUCCESS/FAILURE)
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
@@ -52,7 +71,7 @@ final class McryptAddEnvCommand extends CommandAbstract
                 return Command::FAILURE;
             }
         } catch (\Exception $e) {
-            // $output->writeln('<error>' . $e->getMessage() . '</error>');
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
             return Command::FAILURE;
         }
 
