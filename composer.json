@@ -29,7 +29,9 @@
         }
     },
     "scripts": {
-        "server": "php -S localhost:2232 server.php"
+        "server": "php -S localhost:2232 server.php",
+        "test": "./vendor/bin/phpunit",
+        "test-coverage": "./vendor/bin/phpunit --coverage-html coverage"
     },
     "repositories": [
         {
@@ -47,6 +49,7 @@
         "symfony/config": "^6.4",
         "symfony/yaml": "^6.4",
         "symfony/dotenv": "^6.4",
-        "symfony/console": "^6.4"
+        "symfony/console": "^6.4",
+        "phpunit/phpunit": "^10.5"
     }
 }

@@ -12,7 +12,11 @@
 /bootstrap.php export-ignore
 /server.php export-ignore
 /.env* export-ignore
+/phpunit.xml export-ignore
 /phpunit.xml.dist export-ignore
+/.phpunit.cache export-ignore
+/coverage export-ignore
+/coverage-html export-ignore
 
 # pastikan docs tetap ikut
 # /config !export-ignore

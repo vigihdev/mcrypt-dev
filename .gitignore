@@ -19,3 +19,9 @@
 /bin
 /vendor
 /config
+
+# PHPUnit & Testing
+/.phpunit.cache
+/coverage
+/coverage-html
+*.coverage
